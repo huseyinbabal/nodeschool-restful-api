@@ -1,8 +1,6 @@
 env:
   - MONGO_URI=mongodb://"":""@localhost:27017/nodeschool-test
 
-sudo: required
-
 language: node_js
 
 node_js:
@@ -15,7 +13,9 @@ before_install:
  - npm install istanbul -g
  - npm install coveralls -g
 
-script: npm test
+script:
+  - npm test
+  - sudo service mongod status
 
 after_success:
   - make submit-cov-to-coveralls
