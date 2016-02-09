@@ -37,7 +37,7 @@ exports.list = function(req, res) {
 };
 
 exports.get = function(req, res) {
-    User.findOne({id: req.id}, function(err, user) {
+    User.findOne({_id: req.params.id}, function(err, user) {
         if (err) {
             console.error('Error occurred while getting user: ', err);
             res.json({
@@ -45,16 +45,23 @@ exports.get = function(req, res) {
                 data: user
             })
         } else {
-            res.json({
-                success: true,
-                data: user
-            })
+            if (user) {
+                res.json({
+                    success: true,
+                    data: user
+                })
+            } else {
+                res.status(404).json({
+                    success: false,
+                    data: "User not found"
+                })
+            }
         }
     });
 };
 
 exports.delete = function(req, res) {
-    User.findOneAndRemove({id: req.id}, function(err) {
+    User.findOneAndRemove({_id: req.params.id}, function(err) {
         if (err) {
             console.error('Error occurred while deleting user: ', err);
             res.json({

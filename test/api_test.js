@@ -157,5 +157,45 @@ describe('RESTful API Test', function() {
                         })
                 });
         });
+
+        it('should delete user', function(done) {
+            var user = {
+                "name": "huseyin",
+                "email": "huseyin@gmail.com",
+                "password": "pass"
+            };
+
+            request(apiUrl)
+                .post('/api/users')
+                .send(user)
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    var userId = res.body.data._id;
+
+                    request(apiUrl)
+                        .delete('/api/users/' + userId)
+                        .end(function(err, res) {
+                            if (err) {
+                                throw err;
+                            }
+
+                            res.body.success.should.equal(true);
+
+                            request(apiUrl)
+                                .get('/api/users/' + userId)
+                                .end(function(err, res) {
+                                    if (err) {
+                                        throw err;
+                                    }
+
+                                    res.status.should.equal(404);
+                                    done();
+                                });
+                        })
+                });
+        });
     });
 });
