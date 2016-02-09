@@ -1,0 +1,23 @@
+env:
+  - MONGO_URI=mongodb://test:test@127.0.0.1:27017/nodeschool-test
+
+language: node_js
+
+node_js:
+  - 0.12.7
+
+services:
+  - mongodb
+
+before_script:
+  - sleep 15
+  - mongo mydb_test --eval 'db.addUser("test", "test");'
+
+before_install:
+ - npm install istanbul -g
+ - npm install coveralls -g
+
+script: npm test
+
+after_success:
+  - make submit-cov-to-coveralls

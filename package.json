@@ -1,0 +1,38 @@
+{
+  "name": "nodeschool-restful-api",
+  "version": "1.0.0",
+  "description": "RESTful API example for NodeSchool",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huseyinbabal/nodeschool-restful-api.git"
+  },
+  "keywords": [
+    "rest",
+    "node"
+  ],
+  "author": "Huseyin BABAL <huseyinbabal88@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huseyinbabal/nodeschool-restful-api/issues"
+  },
+  "homepage": "https://github.com/huseyinbabal/nodeschool-restful-api#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
+    "express-unless": "^0.3.0",
+    "method-override": "^2.3.5",
+    "mongoose": "4.4.1",
+    "morgan": "^1.6.1"
+  },
+  "devDependencies": {
+    "async": "^1.5.2",
+    "mocha": "^2.4.5",
+    "should": "^8.2.1",
+    "supertest": "^1.1.0"
+  }
+}
