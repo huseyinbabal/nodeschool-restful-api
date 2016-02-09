@@ -1,5 +1,5 @@
 env:
-  - MONGO_URI=mongodb://test:test@127.0.0.1:27017/nodeschool-test
+  - MONGO_URI=mongodb://"":""@localhost:27017/nodeschool-test
 
 sudo: required
 
@@ -10,10 +10,6 @@ node_js:
 
 services:
   - mongodb
-
-before_script:
-  - sleep 15
-  - mongo mydb_test --eval 'db.addUser("test", "test");'
 
 before_install:
  - npm install istanbul -g
