@@ -1,7 +1,7 @@
 var mongoose = require("mongoose")
     , fs = require("fs")
     , models_path = process.cwd() + '/model';
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/nodeschool-test");
 
 var db = mongoose.connection;
 
