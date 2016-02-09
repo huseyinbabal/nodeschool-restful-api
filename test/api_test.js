@@ -110,5 +110,52 @@ describe('RESTful API Test', function() {
                     });
             });
         });
+
+        it('should update user', function(done) {
+            var user = {
+                "name": "huseyin",
+                "email": "huseyin@gmail.com",
+                "password": "pass1"
+            };
+
+            var updatedUser = {
+                "name": "huseyin_updated",
+                "email": "huseyin_updated@gmail.com",
+                "password": "pass1_updated"
+            };
+
+            request(apiUrl)
+                .post('/api/users')
+                .send(user)
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                     var userId = res.body.data._id;
+                    request(apiUrl)
+                        .put('/api/users/' + userId)
+                        .send(updatedUser)
+                        .end(function(err, res) {
+                            if (err) {
+                                throw err;
+                            }
+                            res.body.success.should.equal(true);
+
+                            request(apiUrl)
+                                .get('/api/users/' + userId)
+                                .end(function(err, res) {
+                                    if (err) {
+                                        throw err;
+                                    }
+
+                                    res.body.success.should.equal(true);
+                                    res.body.data.name.should.equal('huseyin_updated');
+                                    res.body.data.email.should.equal('huseyin_updated@gmail.com');
+                                    res.body.data.password.should.equal('pass1_updated');
+                                    done();
+                                });
+                        })
+                });
+        });
     });
 });

@@ -85,7 +85,10 @@ exports.update = function(req, res) {
                     data: 'User not found'
                 });
             } else {
-                user = new User(req.body);
+                user.name = req.body.name;
+                user.email = req.body.email;
+                user.password = req.body.password;
+
                 user.save(function(err) {
                     if (err) {
                         console.error('Error occurred while updating user: ', err);
