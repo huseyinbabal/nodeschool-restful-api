@@ -1,6 +1,8 @@
 env:
   - MONGO_URI=mongodb://test:test@127.0.0.1:27017/nodeschool-test
 
+sudo: required
+
 language: node_js
 
 node_js:
