@@ -13,9 +13,7 @@ before_install:
  - npm install istanbul -g
  - npm install coveralls -g
 
-script:
-  - npm test
-  - sudo service mongod status
+script: npm test
 
 after_success:
   - make submit-cov-to-coveralls
