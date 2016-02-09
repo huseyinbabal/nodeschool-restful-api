@@ -4,7 +4,7 @@
   "description": "RESTful API example for NodeSchool",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha -t 60000"
   },
   "repository": {
     "type": "git",
