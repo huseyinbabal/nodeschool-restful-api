@@ -16,7 +16,6 @@ before_install:
 
 script:
   - npm test
-  - istanbul cover _mocha
-
+  
 after_success:
   - npm run coveralls
