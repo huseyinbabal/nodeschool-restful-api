@@ -127,7 +127,7 @@ describe('RESTful API Test', function () {
                 .send(user)
                 .end(function (err, res) {
                     if (err) {
-                        throw err;
+                        console.debug(err);
                     }
                     request(apiUrl)
                         .post('/api/users')
@@ -208,7 +208,6 @@ describe('RESTful API Test', function () {
                         throw err;
                     }
                     var userId = res.body.data._id;
-                    console.log('User: ', userId);
                     request(apiUrl)
                         .put('/api/users/' + userId)
                         .set('Authorization', token)

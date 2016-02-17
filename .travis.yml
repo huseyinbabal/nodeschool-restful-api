@@ -18,4 +18,4 @@ script:
   - istanbul cover _mocha
 
 after_success:
-  - make submit-cov-to-coveralls
+  - npm run coveralls

@@ -9,6 +9,6 @@ app.listen(port, function(err) {
     if (err) {
         console.error(err);
     } else {
-        console.info('Service is running on port: ', port);
+        console.log('Service is running on port: ', port);
     }
 });

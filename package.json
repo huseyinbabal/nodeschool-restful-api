@@ -4,8 +4,9 @@
   "description": "RESTful API example for NodeSchool",
   "main": "index.js",
   "scripts": {
-    "test": "env JWT_SECRET=ssshhhh ./node_modules/.bin/mocha -t 60000",
-    "coverage": "istanbul cover _mocha"
+    "test": "NODE_ENV=test mocha",
+    "cover": "NODE_ENV=test istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,10 @@
   },
   "devDependencies": {
     "async": "^1.5.2",
+    "coveralls": "^2.11.6",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.0.0",
     "should": "^8.2.1",
     "supertest": "^1.1.0"
   }
