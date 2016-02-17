@@ -4,7 +4,8 @@
   "description": "RESTful API example for NodeSchool",
   "main": "index.js",
   "scripts": {
-    "test": "env JWT_SECRET=ssshhhh ./node_modules/.bin/mocha -t 60000"
+    "test": "env JWT_SECRET=ssshhhh ./node_modules/.bin/mocha -t 60000",
+    "coverage": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",

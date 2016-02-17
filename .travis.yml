@@ -13,7 +13,9 @@ before_install:
  - npm install istanbul -g
  - npm install coveralls -g
 
-script: npm test
+script:
+  - npm test
+  - istanbul cover _mocha
 
 after_success:
   - make submit-cov-to-coveralls
