@@ -11,6 +11,15 @@ describe('RESTful API Test', function () {
     var app = undefined;
     var token = '';
 
+    beforeEach(function (done) {
+        User.remove({email: {'$ne': 'integrationtest@gmail.com'}}, function (err) {
+            if (err) {
+                console.error('Error occurred while cleaning up user collection');
+            }
+            done();
+        });
+    });
+
     describe('User', function () {
 
         before(function (done) {
@@ -50,15 +59,6 @@ describe('RESTful API Test', function () {
                 });
         });
 
-        beforeEach(function (done) {
-            User.remove({email: {'$ne': 'integrationtest@gmail.com'}}, function (err) {
-                if (err) {
-                    console.error('Error occurred while cleaning up user collection');
-                }
-                done();
-            });
-        });
-
         after(function (done) {
             User.remove({email: 'integrationtest@gmail.com'}, function (err) {
                 if (err) {
@@ -68,8 +68,32 @@ describe('RESTful API Test', function () {
             });
         });
 
+        it('should return forbidden error on empty token', function(done) {
+            request(apiUrl)
+                .get('/api/users')
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.equal(401);
+                    done();
+                });
+        });
+
+        it('should return forbidden error on invalid token', function(done) {
+            request(apiUrl)
+                .get('/api/users')
+                .set('Authorization', 'invalid token')
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.equal(401);
+                    done();
+                });
+        });
+
         it('should save new user', function (done) {
-            console.log('First Test: ' + token);
 
             var user = {
                 "name": "John Doe",
@@ -252,6 +276,63 @@ describe('RESTful API Test', function () {
                                     done();
                                 });
                         })
+                });
+        });
+    });
+
+    describe('Auth', function() {
+
+        it('should register user', function(done) {
+            var user = {
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "password": "12345"
+            };
+
+            request(apiUrl)
+                .post('/api/register')
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.body.success.should.equal(true);
+                    res.body.data.name.should.equal("John Doe");
+                    res.body.data.email.should.equal("johndoe@gmail.com");
+                    res.body.data.password.should.equal("12345");
+                    done();
+                });
+        });
+
+        it('should login user', function(done) {
+            var user = {
+                "name": "John Doe",
+                "email": "johndoe@gmail.com",
+                "password": "12345"
+            };
+
+            request(apiUrl)
+                .post('/api/register')
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    request(apiUrl)
+                        .post('/api/login')
+                        .send({
+                            email: "johndoe@gmail.com",
+                            password: "12345"
+                        })
+                        .end(function(err, res) {
+                            if (err) {
+                                throw err;
+                            }
+
+                            res.body.success.should.equal(true);
+                            res.body.data.should.not.be.empty;
+                            done();
+                        });
                 });
         });
     });
