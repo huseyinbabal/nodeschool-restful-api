@@ -25,6 +25,7 @@
     "express": "^4.13.4",
     "express-jwt": "^3.3.0",
     "express-unless": "^0.3.0",
+    "jsonwebtoken": "^5.5.4",
     "method-override": "^2.3.5",
     "mongoose": "4.4.1",
     "morgan": "^1.6.1"

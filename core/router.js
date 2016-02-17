@@ -12,6 +12,7 @@ module.exports = function () {
 
     var router = express.Router();
 
+    // User
     router.route("/users")
         .post(controllers.user.save)
         .get(controllers.user.list);
@@ -20,6 +21,13 @@ module.exports = function () {
         .get(controllers.user.get)
         .put(controllers.user.update)
         .delete(controllers.user.delete);
+
+    // Auth
+    router.route('/login')
+        .post(controllers.auth.login);
+
+    router.route('/register')
+        .post(controllers.auth.register);
 
     return router;
 };
