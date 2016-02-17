@@ -13,10 +13,22 @@ exports.login = function(req, res) {
         } else {
             if (user) {
                 var userWillBeSigned = delete user.password;
-                res.json({
-                    success: true,
-                    data: jwt.sign(userWillBeSigned, process.env.JWT_SECRET)
-                })
+                var token = jwt.sign(userWillBeSigned, process.env.JWT_SECRET || 'sssshhhh');
+                user.token = token;
+                user.save(function(err) {
+                    if (err) {
+                        console.error('Error occurred while saving user token: ', err);
+                        res.json({
+                            success: false,
+                            data: 'Error occurred while saving user token'
+                        });
+                    } else {
+                        res.json({
+                            success: true,
+                            data: token
+                        })
+                    }
+                });
             } else {
                 res.json({
                     success: false,
@@ -30,7 +42,6 @@ exports.login = function(req, res) {
 exports.register = function(req, res) {
     var userModel = new User(req.body);
     userModel.save(function(err, user) {
-        console.log('asdas');
         if (err) {
             console.error('Error occurred while registering user: ', err);
             res.json({

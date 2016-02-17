@@ -20,7 +20,7 @@ exports.save = function(req, res) {
 };
 
 exports.list = function(req, res) {
-    User.find({}, function(err, users) {
+    User.find({}).sort({createDate: -1}).exec(function(err, users) {
         if (err) {
             console.error('Error occurred while listing users: ', err);
             res.json({
@@ -78,7 +78,7 @@ exports.delete = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    User.findOne({id: req.id}, function(err, user) {
+    User.findOne({_id: req.params.id}, function(err, user) {
         if (err) {
             console.error('Error occurred while getting user for update: ', err);
             res.json({
@@ -96,7 +96,7 @@ exports.update = function(req, res) {
                 user.email = req.body.email;
                 user.password = req.body.password;
 
-                user.save(function(err) {
+                user.save(function(err, usr) {
                     if (err) {
                         console.error('Error occurred while updating user: ', err);
                         res.json({
@@ -106,7 +106,7 @@ exports.update = function(req, res) {
                     } else {
                         res.json({
                             success: true,
-                            data: 'User successfully updated'
+                            data: 'User successfully updated',
                         });
                     }
                 });
