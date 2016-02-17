@@ -147,12 +147,6 @@ describe('RESTful API Test', function () {
                 "password": "pass1"
             };
 
-            var user2 = {
-                "name": "user2",
-                "email": "user2@gmail.com",
-                "password": "pass2"
-            };
-
             async.parallel([
                 function (callback) {
                     request(apiUrl)
@@ -175,9 +169,6 @@ describe('RESTful API Test', function () {
                     .set('Authorization', token)
                     .end(function (err, res) {
                         res.body.success.should.equal(true);
-                        res.body.data[0].name.should.equal('user2');
-                        res.body.data[0].email.should.equal('user2@gmail.com');
-                        res.body.data[0].password.should.equal('pass2');
                         res.body.data[1].name.should.equal('user1');
                         res.body.data[1].email.should.equal('user1@gmail.com');
                         res.body.data[1].password.should.equal('pass1');
