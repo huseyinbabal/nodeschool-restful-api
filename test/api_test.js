@@ -147,34 +147,23 @@ describe('RESTful API Test', function () {
                 "password": "pass1"
             };
 
-            async.parallel([
-                function (callback) {
-                    request(apiUrl)
-                        .post('/api/users')
-                        .set('Authorization', token)
-                        .send(user1)
-                        .end(callback);
-                },
 
-                function (callback) {
+            request(apiUrl)
+                .post('/api/users')
+                .set('Authorization', token)
+                .send(user1)
+                .end(function(err, res) {
                     request(apiUrl)
-                        .post('/api/users')
+                        .get('/api/users')
                         .set('Authorization', token)
-                        .send(user2)
-                        .end(callback);
-                }
-            ], function (err, results) {
-                request(apiUrl)
-                    .get('/api/users')
-                    .set('Authorization', token)
-                    .end(function (err, res) {
-                        res.body.success.should.equal(true);
-                        res.body.data[1].name.should.equal('user1');
-                        res.body.data[1].email.should.equal('user1@gmail.com');
-                        res.body.data[1].password.should.equal('pass1');
-                        done();
-                    });
-            });
+                        .end(function (err, response) {
+                            response.body.success.should.equal(true);
+                            response.body.data[0].name.should.equal('user1');
+                            response.body.data[0].email.should.equal('user1@gmail.com');
+                            response.body.data[0].password.should.equal('pass1');
+                            done();
+                        });
+                });
         });
 
         it('should update user', function (done) {
