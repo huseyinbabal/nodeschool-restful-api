@@ -1,5 +1,4 @@
-var express = require('express'),
-    bodyParser = require('body-parser'),
+var bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     expressJwt = require('express-jwt'),
     morgan = require('morgan'),
